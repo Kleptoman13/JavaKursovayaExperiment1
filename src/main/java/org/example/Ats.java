@@ -103,7 +103,7 @@ public class Ats implements Serializable {
         this.lastname = lastname.strip();
         for (int i = 0; i < this.lastname.length(); i++) {
             if (!Character.isAlphabetic(this.lastname.charAt(i))) {
-                this.lastname = "Incorrect data";
+                this.lastname = "Incorrect";
             }
         }
         this.lastname = ("" + this.lastname.charAt(0)).toUpperCase() + this.lastname.substring(1).toLowerCase();

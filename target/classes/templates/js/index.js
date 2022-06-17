@@ -12,6 +12,19 @@ const $list_of_ats = document.querySelector('.list_of_ats');
 const $choosednumber = document.querySelector('.choosed_number');
 const $asBtn_save = document.querySelector('.asBtn_save');
 const $asBtn_cancel = document.querySelector('.asBtn_cancel');
+const $bg_addAts = document.querySelector('.bg_addAts');
+const $addBtn = document.querySelector('.addBtn');
+const $addAts = document.querySelector('.addAts');
+const $addBtn_save = document.querySelector('.addBtn_save');
+const $addBtn_cancel = document.querySelector('.addBtn_cancel');
+
+const $addNumber = document.querySelector('.addNumber');
+const $addName = document.querySelector('.addName');
+const $addSurname = document.querySelector('.addSurname');
+const $addLastName = document.querySelector('.addLastname');
+const $addAddres = document.querySelector('.addAddres');
+const $addMobileNumber = document.querySelector('.addMobileNumber');
+const $addEmail = document.querySelector('.addEmail');
 
 let filterdAts;
 
@@ -19,6 +32,7 @@ let ats = null;
 
 let isActive = 0;
 
+//Генерация списка
 function templateGenerator(list, isActive)
 {
     let temp = '';
@@ -53,6 +67,7 @@ function templateGenerator(list, isActive)
     $list.innerHTML = temp;
 }
 
+//Генерация списка в модальном окне
 function assignGeneretor(list)
 {
     let temp = '';
@@ -69,6 +84,7 @@ function assignGeneretor(list)
     $list_of_ats.innerHTML = temp;
 }
 
+//Считование API
 function GetInfo()
 {
     fetch('http://localhost:8080/back?info')
@@ -88,12 +104,12 @@ GetInfo();
 
 let selectedBannerNumberIndex = 0;
 let selectedBannerNumber = 0;
-let listChange = '';
+
+//открытие модального окна для присвоения номера
 $list.addEventListener('dblclick', function(e)
 {
         if (e.target.classList.contains('number_info1') || e.target.classList.contains('number_infoP1'))
         {
-            // listChange = 'edition';
             selectedBannerNumberIndex = e.target.getAttribute('data-index');
             selectedBannerNumber = ats[selectedBannerNumberIndex].number;
             console.log(selectedBannerNumberIndex);
@@ -113,24 +129,13 @@ $list_of_ats.addEventListener('click', function(e)
 {
         if (e.target.classList.contains('number_info') || e.target.classList.contains('number_infoP'))
         {
-            // listChange = 'edition';
             tempSelectedBanner = e.target.getAttribute('data-index');
             console.log(tempSelectedBanner);
             
         }
 })
 
-// function addNumber()
-// {
-//     fetch('http://localhost:8080/back?addNumber')
-//     .then(function (response)
-//     {
-//         return response.json();
-//     })
-// }
-
-// addNumber();
-
+// Присвоение номера
 $asBtn_save.addEventListener('click', function(e)
 {
 
@@ -157,6 +162,7 @@ $asBtn_save.addEventListener('click', function(e)
     
 })
 
+//Отмена присвоения
 $asBtn_cancel.addEventListener('click', function()
 {
     $bg_assignment.style.opacity = "0";
@@ -165,8 +171,47 @@ $asBtn_cancel.addEventListener('click', function()
     $assignment.style.visibility = "hidden";
 })
 
+$addBtn.addEventListener('click', function()
+{
+    $bg_addAts.style.opacity = "1";
+    $bg_addAts.style.visibility = "visible";
+    $addAts.style.opacity = "1";
+    $addAts.style.visibility = "visible";
+})
+
+$addBtn_save.addEventListener('click', function()
+{
+    let addAts = {
+        number:$addNumber.value,
+        isFreeNumber:1,
+        name:$addName.value,
+        surname:$addSurname.value,
+        lastname:$addLastName.value,
+        addres:$addAddres.value,
+        mobilenumber:$addMobileNumber.value,
+        email:$addEmail.value
+    }
+    console.log(addAts);
+    fetch("http://localhost:8080/back?addAts", {
+        method: 'POST',
+        body: JSON.stringify(addAts),
+    })
+    .then(function(response)
+    {
+        return response.json();
+    })
+})
+
+$addBtn_cancel.addEventListener('click', function()
+{
+    $bg_addAts.style.opacity = "0";
+    $bg_addAts.style.visibility = "hidden";
+    $addAts.style.opacity = "0";
+    $addAts.style.visibility = "hidden";
+})
 
 
+// Поиск по номеру
 $liveSearchNumber.addEventListener('input', function() {
     let query = this.value.toString().toLowerCase();
     let searchingValue = "number";
@@ -179,6 +224,7 @@ $liveSearchNumber.addEventListener('input', function() {
     templateGenerator(filterdAts, isActive);
 })
 
+// Поиск по номеру телефона или по имени
 $searchByText.addEventListener('change', function () {
     let searchingValue = $searchByText.elements["liveSearch"].value;
     $liveSearchName.addEventListener('input', function () {
@@ -190,6 +236,7 @@ $searchByText.addEventListener('change', function () {
     });
 });
 
+//Выдача списка свободных номеров
 function checkFree()
 {
     if($searchByFreeNumber.checked)

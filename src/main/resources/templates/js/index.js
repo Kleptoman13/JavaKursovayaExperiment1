@@ -12,6 +12,19 @@ const $list_of_ats = document.querySelector('.list_of_ats');
 const $choosednumber = document.querySelector('.choosed_number');
 const $asBtn_save = document.querySelector('.asBtn_save');
 const $asBtn_cancel = document.querySelector('.asBtn_cancel');
+const $bg_addAts = document.querySelector('.bg_addAts');
+const $addBtn = document.querySelector('.addBtn');
+const $addAts = document.querySelector('.addAts');
+const $addBtn_save = document.querySelector('.addBtn_save');
+const $addBtn_cancel = document.querySelector('.addBtn_cancel');
+
+const $addNumber = document.querySelector('.addNumber');
+const $addName = document.querySelector('.addName');
+const $addSurname = document.querySelector('.addSurname');
+const $addLastName = document.querySelector('.addLastname');
+const $addAddres = document.querySelector('.addAddres');
+const $addMobileNumber = document.querySelector('.addMobileNumber');
+const $addEmail = document.querySelector('.addEmail');
 
 let filterdAts;
 
@@ -29,10 +42,10 @@ function templateGenerator(list, isActive)
         {
             if(list[i].isFreeNumber == 1)
             {
-                temp += '<div class="number_info" data-index="'+ i +'"><p class="number_infoP" data-index="'+ i +'">' + list[i].number + '<br>' + list[i].name + '<br>' + list[i].surname + '<br>' + list[i].lastname + '<br>' + list[i].addres + '<br>' + list[i].mobilenumber + '<br>' + list[i].email + '</p></div>'
+                temp += '<div class="number_info number" data-index="'+ i +'"><p class="number_infoP" data-index="'+ i +'">' + list[i].number + '<br>' + list[i].name + '<br>' + list[i].surname + '<br>' + list[i].lastname + '<br>' + list[i].addres + '<br>' + list[i].mobilenumber + '<br>' + list[i].email + '</p></div>'
             }
             else{
-                temp += '<div class="number_info1" data-index="'+ i +'"><p class="number_infoP1" data-index="'+ i +'">Свободный номер<br>' + list[i].number + '</p></div>'
+                temp += '<div class="number_info1 number" data-index="'+ i +'"><p class="number_infoP1" data-index="'+ i +'">Свободный номер<br>' + list[i].number + '</p></div>'
             }
         }
     }
@@ -42,7 +55,7 @@ function templateGenerator(list, isActive)
         {
             if(list[i].isFreeNumber == 0)
             {
-                temp += '<div class="number_info1" data-index="'+ i +'"><p class="number_infoP1" data-index="'+ i +'">Свободный номер<br>' + list[i].number + '</p></div>'
+                temp += '<div class="number_info1 number" data-index="'+ i +'"><p class="number_infoP1" data-index="'+ i +'">Свободный номер<br>' + list[i].number + '</p></div>'
             }
         }
     }
@@ -64,7 +77,7 @@ function assignGeneretor(list)
         {
             if(list[i].isFreeNumber == 1)
             {
-                temp += '<div class="number_info" data-index="'+ i +'"><p class="number_infoP free_numberP" data-index="'+ i +'">' + list[i].number + '<br>' + list[i].name + '<br>' + list[i].surname + '<br>' + list[i].lastname + '<br>' + list[i].addres + '<br>' + list[i].mobilenumber + '<br>' + list[i].email + '</p></div>'
+                temp += '<div class="number_info number" data-index="'+ i +'"><p class="number_infoP free_numberP" data-index="'+ i +'">' + list[i].number + '<br>' + list[i].name + '<br>' + list[i].surname + '<br>' + list[i].lastname + '<br>' + list[i].addres + '<br>' + list[i].mobilenumber + '<br>' + list[i].email + '</p></div>'
             }
         }
     }
@@ -156,6 +169,50 @@ $asBtn_cancel.addEventListener('click', function()
     $bg_assignment.style.visibility = "hidden";
     $assignment.style.opacity = "0";
     $assignment.style.visibility = "hidden";
+})
+
+$addBtn.addEventListener('click', function()
+{
+    $bg_addAts.style.opacity = "1";
+    $bg_addAts.style.visibility = "visible";
+    $addAts.style.opacity = "1";
+    $addAts.style.visibility = "visible";
+})
+
+$addBtn_save.addEventListener('click', function()
+{
+    let addAts = {
+        number:$addNumber.value,
+        isFreeNumber:1,
+        name:$addName.value,
+        surname:$addSurname.value,
+        lastname:$addLastName.value,
+        addres:$addAddres.value,
+        mobilenumber:$addMobileNumber.value,
+        email:$addEmail.value
+    }
+    console.log(addAts);
+    fetch("http://localhost:8080/back?addAts", {
+        method: 'POST',
+        body: JSON.stringify(addAts),
+    })
+    .then(function(response)
+    {
+        return response.json();
+    })
+
+    $bg_addAts.style.opacity = "0";
+    $bg_addAts.style.visibility = "hidden";
+    $addAts.style.opacity = "0";
+    $addAts.style.visibility = "hidden";
+})
+
+$addBtn_cancel.addEventListener('click', function()
+{
+    $bg_addAts.style.opacity = "0";
+    $bg_addAts.style.visibility = "hidden";
+    $addAts.style.opacity = "0";
+    $addAts.style.visibility = "hidden";
 })
 
 

@@ -38,6 +38,16 @@ public class SimpleServer implements HttpHandler {
         StringBuilder response = new StringBuilder();
 
 
+        if (requestParamValues[0].equals("addAts")){
+            ObjectMapper objectMapper = new ObjectMapper();
+            Ats tempAts = objectMapper.readValue(new BufferedReader(new InputStreamReader(httpExchange.getRequestBody())).lines().collect(Collectors.joining("\n")), Ats.class);
+            AtsList tempAtsList = Database.loadJSON("./src/main/Database/AtsDataBase.json");
+            tempAtsList.add(tempAts);
+            System.out.println(tempAtsList);
+            Database.saveJSON(tempAtsList, "AtsDataBase");
+            response.append(tempAts);
+        }
+
         /*
         * Функция обращения до сервера для присвоения свободного номера другому владельцу
         * */
