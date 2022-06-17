@@ -48,6 +48,20 @@ public class SimpleServer implements HttpHandler {
             response.append(tempAts);
         }
 
+        if (requestParamValues[0].equals("deleteAts"))
+        {
+            String tempNumber = new BufferedReader(new InputStreamReader(httpExchange.getRequestBody())).lines().collect(Collectors.joining("\n"));
+            AtsList tempAtsList = Database.loadJSON("./src/main/Database/AtsDataBase.json");
+            int tempSize = tempAtsList.getAtsList().size();
+            System.out.println(tempSize);
+            System.out.println(tempAtsList.getAtsList().get(0));
+            if (tempSize > tempAtsList.getAtsList().size()) {
+                response.append("{\"Deletion\": \"Deleted\"}");
+            } else {
+                response.append("{\"Deletion\": \"notDeleted\"}");
+            }
+        }
+
         /*
         * Функция обращения до сервера для присвоения свободного номера другому владельцу
         * */
@@ -57,7 +71,7 @@ public class SimpleServer implements HttpHandler {
             NumberOfSom numbers = objectMapper.readValue(new BufferedReader(new InputStreamReader(httpExchange.getRequestBody())).lines().collect(Collectors.joining("\n")), NumberOfSom.class);
             AtsList tempAtsList = Database.loadJSON("./src/main/Database/AtsDataBase.json");
 
-//            tempAtsList.AssignNumber(numbers.getSelected_number(), numbers.getSelected_banner(), numbers.getSelected_numberI());
+            tempAtsList.AssignNumber(numbers.getSelected_number(), numbers.getSelected_banner(), numbers.getSelected_numberI());
 
             System.out.println(tempAtsList);
             response.append(numbers);

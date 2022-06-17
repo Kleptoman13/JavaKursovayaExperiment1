@@ -25,6 +25,14 @@ public class AtsList implements Serializable {
         list.remove(selected_numberI);
     }
 
+    public void deleteByNumber(String number) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getNumber() == Integer.parseInt(number, 10)) {
+                list.remove(i);
+            }
+        }
+    }
+
     public ArrayList getAtsList()
     {
         return this.list;

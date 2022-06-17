@@ -13,10 +13,15 @@ const $choosednumber = document.querySelector('.choosed_number');
 const $asBtn_save = document.querySelector('.asBtn_save');
 const $asBtn_cancel = document.querySelector('.asBtn_cancel');
 const $bg_addAts = document.querySelector('.bg_addAts');
+const $bg_delAts = document.querySelector('.bg_delAts');
 const $addBtn = document.querySelector('.addBtn');
 const $addAts = document.querySelector('.addAts');
 const $addBtn_save = document.querySelector('.addBtn_save');
 const $addBtn_cancel = document.querySelector('.addBtn_cancel');
+const $delBtn = document.querySelector('.delBtn');
+const $delAts = document.querySelector('.delAts');
+const $delBtn_save = document.querySelector('.delBtn_save');
+const $delBtn_cancel = document.querySelector('.delBtn_cancel');
 
 const $addNumber = document.querySelector('.addNumber');
 const $addName = document.querySelector('.addName');
@@ -25,6 +30,7 @@ const $addLastName = document.querySelector('.addLastname');
 const $addAddres = document.querySelector('.addAddres');
 const $addMobileNumber = document.querySelector('.addMobileNumber');
 const $addEmail = document.querySelector('.addEmail');
+const $delNumber = document.querySelector('.delNumber');
 
 let filterdAts;
 
@@ -135,6 +141,15 @@ $list_of_ats.addEventListener('click', function(e)
         }
 })
 
+function isDSurnameCorrect() {
+    isCorrect = true;
+    if (($dSurname.value == ' ') || (!(/^[A-Za-z]+$/i).test($dSurname.value))) {
+        isCorrect = false;
+    }
+    return isCorrect;
+}
+
+
 // Присвоение номера
 $asBtn_save.addEventListener('click', function(e)
 {
@@ -171,6 +186,7 @@ $asBtn_cancel.addEventListener('click', function()
     $assignment.style.visibility = "hidden";
 })
 
+
 $addBtn.addEventListener('click', function()
 {
     $bg_addAts.style.opacity = "1";
@@ -179,6 +195,7 @@ $addBtn.addEventListener('click', function()
     $addAts.style.visibility = "visible";
 })
 
+//Добавление АТС
 $addBtn_save.addEventListener('click', function()
 {
     let addAts = {
@@ -207,6 +224,43 @@ $addBtn_save.addEventListener('click', function()
     $addAts.style.visibility = "hidden";
 })
 
+//Открытие окна для удаления АТС
+$delBtn.addEventListener('click', function(){
+    $bg_delAts.style.opacity = "1";
+    $bg_delAts.style.visibility = "visible";
+    $delAts.style.opacity = "1";
+    $delAts.style.visibility = "visible";
+})
+
+$delBtn_save.addEventListener('click', function(){
+    let deleteByNumber = $delNumber.value;
+    fetch("http://localhost:8080/back?deleteAts", {
+        method: 'POST',
+        body: deleteByNumber,
+    }).then(response =>
+        response.json().then(data => ({
+            data: data,
+            status: response.status
+        })).then(res => {
+            if (JSON.stringify(res.data) == '{"Deletion":"Deleted"}') {
+                alert("Deleted!")
+            } else {
+                alert("Try again!")
+            }
+        }));
+    alert('Successful!');
+})
+
+// Отмена удаления
+$delBtn_cancel.addEventListener('click', function()
+{
+    $bg_delAts.style.opacity = "0";
+    $bg_delAts.style.visibility = "hidden";
+    $delAts.style.opacity = "0";
+    $delAts.style.visibility = "hidden";
+})
+
+// Отмена добавления
 $addBtn_cancel.addEventListener('click', function()
 {
     $bg_addAts.style.opacity = "0";

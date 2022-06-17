@@ -131,12 +131,14 @@ h1, h2, h3, h4, h5, h6, ol, ul, li, a, p
     display: flex;
     opacity: 0;
     visibility: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .assign
 {
     width: 1000px;
-    max-height: 800px;
+    height: 1000px;
     padding: 20px 20px;
     background-color: #ffffff;
     margin: auto;
@@ -163,8 +165,10 @@ h1, h2, h3, h4, h5, h6, ol, ul, li, a, p
 
 .list_of_ats
 {
-    display: flex;
     width: 75%;
+    display: flex;
+    flex-wrap: wrap;
+    height: 160px;
 }
 
 /*Adding*/
@@ -201,4 +205,35 @@ h1, h2, h3, h4, h5, h6, ol, ul, li, a, p
 .liveSearchBlock h2{
     font-size: 18px;
     margin: 10px;
+}
+
+/*Delete*/
+
+.bg_delAts
+{
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.delAts
+{
+    width: 1000px;
+    max-height: 800px;
+    padding: 20px 20px;
+    background-color: #ffffff;
+    margin: auto;
+    vertical-align: middle;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
 }

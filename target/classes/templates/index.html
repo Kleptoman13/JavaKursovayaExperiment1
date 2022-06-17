@@ -24,7 +24,9 @@
                         </form>
                         <input type="text" class="byName" placeholder="Search..."><br>
                         <input type="checkbox" onclick="checkFree()" class="byFreeNumber"><label>Free Numbers</label><br>
+                        <h2>Добавить ATS: </h2>
                         <input class="addBtn" type="button" value="Добавить">
+                        <input class="delBtn" type="button" value="Удалить">
                     </div>
                 </div>
                 <div class="list"></div>
@@ -65,6 +67,19 @@
             </div>
         </div>
     </div>
+
+    <div class="bg_delAts">
+        <div class="delAts">
+            <div class="delAts_content">
+                <h2>Delete ATS</h2>
+                <input type="number" class="delNumber" placeholder="Number"><br>
+            </div>
+            <div class="assign_btns">
+                <input class="delBtn_save" type="button" value="Удалить">
+                <input class="delBtn_cancel" type="button" value="Отменить">
+            </div>
+        </div>
+    </div> 
 
     <script src="js/index.js"></script>
 </body>
