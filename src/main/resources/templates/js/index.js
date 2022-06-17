@@ -19,6 +19,7 @@ let ats = null;
 
 let isActive = 0;
 
+//Генерация списка
 function templateGenerator(list, isActive)
 {
     let temp = '';
@@ -53,6 +54,7 @@ function templateGenerator(list, isActive)
     $list.innerHTML = temp;
 }
 
+//Генерация списка в модальном окне
 function assignGeneretor(list)
 {
     let temp = '';
@@ -69,6 +71,7 @@ function assignGeneretor(list)
     $list_of_ats.innerHTML = temp;
 }
 
+//Считование API
 function GetInfo()
 {
     fetch('http://localhost:8080/back?info')
@@ -88,12 +91,12 @@ GetInfo();
 
 let selectedBannerNumberIndex = 0;
 let selectedBannerNumber = 0;
-let listChange = '';
+
+//открытие модального окна для присвоения номера
 $list.addEventListener('dblclick', function(e)
 {
         if (e.target.classList.contains('number_info1') || e.target.classList.contains('number_infoP1'))
         {
-            // listChange = 'edition';
             selectedBannerNumberIndex = e.target.getAttribute('data-index');
             selectedBannerNumber = ats[selectedBannerNumberIndex].number;
             console.log(selectedBannerNumberIndex);
@@ -113,24 +116,13 @@ $list_of_ats.addEventListener('click', function(e)
 {
         if (e.target.classList.contains('number_info') || e.target.classList.contains('number_infoP'))
         {
-            // listChange = 'edition';
             tempSelectedBanner = e.target.getAttribute('data-index');
             console.log(tempSelectedBanner);
             
         }
 })
 
-// function addNumber()
-// {
-//     fetch('http://localhost:8080/back?addNumber')
-//     .then(function (response)
-//     {
-//         return response.json();
-//     })
-// }
-
-// addNumber();
-
+// Присвоение номера
 $asBtn_save.addEventListener('click', function(e)
 {
 
@@ -157,6 +149,7 @@ $asBtn_save.addEventListener('click', function(e)
     
 })
 
+//Отмена присвоения
 $asBtn_cancel.addEventListener('click', function()
 {
     $bg_assignment.style.opacity = "0";
@@ -166,7 +159,7 @@ $asBtn_cancel.addEventListener('click', function()
 })
 
 
-
+// Поиск по номеру
 $liveSearchNumber.addEventListener('input', function() {
     let query = this.value.toString().toLowerCase();
     let searchingValue = "number";
@@ -179,6 +172,7 @@ $liveSearchNumber.addEventListener('input', function() {
     templateGenerator(filterdAts, isActive);
 })
 
+// Поиск по номеру телефона или по имени
 $searchByText.addEventListener('change', function () {
     let searchingValue = $searchByText.elements["liveSearch"].value;
     $liveSearchName.addEventListener('input', function () {
@@ -190,6 +184,7 @@ $searchByText.addEventListener('change', function () {
     });
 });
 
+//Выдача списка свободных номеров
 function checkFree()
 {
     if($searchByFreeNumber.checked)
