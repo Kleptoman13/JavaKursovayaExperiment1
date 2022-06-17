@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kursovaya</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+
+    <div class="main">
+        <div class="wrapper">
+            <div class="content">
+                <div class="functions">
+                    <div class="liveSearchBlock">
+                        <h4>Search</h4>
+                        <input type="text" class="byNumber" placeholder="Search by number">
+                        <form id="liveSearch">
+                            <select name="liveSearch" id="liveSearch" class="liveSearchField">
+                                <option value="none" disabled selected>Category...</option>
+                                <option value="name">Name</option>
+                                <option value="mobilenumber">Mobile Number</option>
+                            </select>
+                        </form>
+                        <input type="text" class="byName" placeholder="Search..."><br>
+                        <input type="checkbox" onclick="checkFree()" class="byFreeNumber"><label>Free Numbers</label>
+                    </div>
+                </div>
+                <div class="list"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg_assign">
+        <div class="assign">
+            <div class="assign_content">
+                <div class="choosed_number"></div>
+                <div class="list_of_ats"></div>
+            </div>
+
+            <div class="assign_btns">
+                <input class="asBtn_save" type="button" value="Потвердить">
+                <input class="asBtn_cancel" type="button" value="Отменить">
+            </div>
+
+        </div>
+    </div>
+
+    <script src="js/index.js"></script>
+</body>
+</html>

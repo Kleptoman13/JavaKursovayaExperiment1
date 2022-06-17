@@ -1,0 +1,167 @@
+html, body
+{
+    margin: 0;
+    padding: 0;
+
+}
+h1, h2, h3, h4, h5, h6, ol, ul, li, a, p
+{
+    font-family: "Tahoma";
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+    font-size: 14px;
+    list-style: none;
+    color: #000000;
+    text-decoration: none;
+}
+
+*, *::before, *::after
+{
+    box-sizing: border-box;
+}
+
+.wrapper
+{
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.content
+{
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Functions */
+
+.functions
+{
+    width: 25%;
+    display: flex;
+}
+
+.liveSearchBlock h4{
+    font-size: 18px;
+    padding: 7px;
+}
+
+.byNumber
+{
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.byName
+{
+    padding: 5px;
+    margin-bottom: 10px;
+    visibility: visible;
+}
+
+.liveSearchField
+{
+    padding: 5px 10px;
+    visibility: visible;
+}
+
+
+
+/* List */
+
+.list
+{
+    width: 75%;
+    display: flex;
+}
+
+.number_info
+{
+    width: 25%;
+    height: 150px;
+    background-color: #aaa;
+    text-align: center;
+    margin: 5px;
+}
+
+.number_info:hover
+{
+    background-color: rgb(100, 100, 100);
+}
+
+.number_infoP
+{
+    padding: 15px;
+    font-size: 14px;
+}
+
+.number_info1
+{
+    width: 25%;
+    height: 150px;
+    background-color: #aaa;
+    text-align: center;
+    margin: 5px;
+}
+
+.number_info1:hover
+{
+    background-color: rgb(100, 100, 100);
+}
+
+.number_infoP1
+{
+    padding: 15px;
+    font-size: 14px;
+}
+
+
+/* Assing */
+
+
+.bg_assign
+{
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.assign
+{
+    width: 1000px;
+    max-height: 800px;
+    padding: 20px 20px;
+    background-color: #ffffff;
+    margin: auto;
+    vertical-align: middle;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.assign_content
+{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.choosed_number
+{
+    width: 25%;
+}
+
+.list_of_ats
+{
+    display: flex;
+    width: 75%;
+}
