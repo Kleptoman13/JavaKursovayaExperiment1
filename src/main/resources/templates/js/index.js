@@ -5,6 +5,7 @@ const $liveSearchName = document.querySelector('.byName');
 const $liveSearchField = document.querySelector('.liveSearchField');
 const $searchByText = document.getElementById('liveSearch');
 const $searchByFreeNumber = document.querySelector('.byFreeNumber');
+const $setFreeNumber = document.querySelector('.isFreeNumber');
 // const $isFree = document.querySelector('.freenumber');
 const $bg_assignment = document.querySelector('.bg_assign');
 const $assignment = document.querySelector('.assign');
@@ -13,11 +14,15 @@ const $choosednumber = document.querySelector('.choosed_number');
 const $asBtn_save = document.querySelector('.asBtn_save');
 const $asBtn_cancel = document.querySelector('.asBtn_cancel');
 const $bg_addAts = document.querySelector('.bg_addAts');
+const $bg_editAts = document.querySelector('.bg_editAts');
 const $bg_delAts = document.querySelector('.bg_delAts');
 const $addBtn = document.querySelector('.addBtn');
 const $addAts = document.querySelector('.addAts');
+const $editAts = document.querySelector('.editAts');
 const $addBtn_save = document.querySelector('.addBtn_save');
 const $addBtn_cancel = document.querySelector('.addBtn_cancel');
+const $editBtn_save = document.querySelector('.editBtn_save');
+const $editBtn_cancel = document.querySelector('.editBtn_cancel');
 const $delBtn = document.querySelector('.delBtn');
 const $delAts = document.querySelector('.delAts');
 const $delBtn_save = document.querySelector('.delBtn_save');
@@ -32,11 +37,31 @@ const $addMobileNumber = document.querySelector('.addMobileNumber');
 const $addEmail = document.querySelector('.addEmail');
 const $delNumber = document.querySelector('.delNumber');
 
+const $isFreeNumberEdit = document.querySelector('.isFreeNumberEdit');
+const $editNumber = document.querySelector('.editNumber');
+const $editName = document.querySelector('.editName');
+const $editSurname = document.querySelector('.editSurname');
+const $editLastName = document.querySelector('.editLastname');
+const $editAddres = document.querySelector('.editAddres');
+const $editMobileNumber = document.querySelector('.editMobileNumber');
+const $editEmail = document.querySelector('.editEmail');
+
 let filterdAts;
 
 let ats = null;
 
 let isActive = 0;
+
+function clearAts()
+{
+    $addNumber.value = '';
+    $addName.value = '';
+    $addSurname.value = '';
+    $addLastName.value = '';
+    $addAddres.value = '';
+    $addMobileNumber.value = '';
+    $addEmail.value = '';
+}
 
 //Генерация списка
 function templateGenerator(list, isActive)
@@ -128,6 +153,86 @@ $list.addEventListener('dblclick', function(e)
         }
 })
 
+let selectedEditBanner;
+
+//Открытие модального окна для редактирования
+$list.addEventListener('click', function(e){
+    if (e.target.classList.contains('number_info') || e.target.classList.contains('number_infoP'))
+    {
+        selectedEditBanner = e.target.getAttribute('data-index');
+        $editNumber.value = ats[selectedEditBanner].number;
+        $editName.value = ats[selectedEditBanner].name;
+        $editSurname.value = ats[selectedEditBanner].surname;
+        $editLastName.value = ats[selectedEditBanner].lastname;
+        $editAddres.value = ats[selectedEditBanner].addres;
+        $editMobileNumber.value = ats[selectedEditBanner].mobilenumber;
+
+        $bg_editAts.style.opacity = "1";
+        $bg_editAts.style.visibility = "visible";
+        $editAts.style.opacity = "1";
+        $editAts.style.visibility = "visible";
+    }
+})
+let isFreeNumberEdit;
+//Редактирование
+$editBtn_save.addEventListener('click', function(e)
+{
+    let tempEditAts;
+
+    if(isFreeNumberEdit == 1)
+    {
+        tempEditAts = {
+            number:$editNumber.value,
+            isFreeNumber:0,
+            name:"null",
+            surname:"null",
+            lastname:"null",
+            addres:"null",
+            mobilenumber:"null",
+            email:ats[selectedEditBanner].email
+        }
+    }
+    else{
+        tempEditAts = {
+            number:$editNumber.value,
+            isFreeNumber:1,
+            name:$editName.value,
+            surname:$editSurname.value,
+            lastname:$editLastName.value,
+            addres:$editAddres.value,
+            mobilenumber:$editMobileNumber.value,
+            email:ats[selectedEditBanner].email
+        }
+    }
+
+    console.log(tempEditAts);
+
+    fetch("http://localhost:8080/back?editAts", {
+        method: 'POST',
+        body: JSON.stringify(tempEditAts),
+    }).then(function (response)
+    {
+        return response.json();
+    })
+        
+        
+
+    GetInfo();
+    $bg_editAts.style.opacity = "0";
+    $bg_editAts.style.visibility = "hidden";
+    $editAts.style.opacity = "0";
+    $editAts.style.visibility = "hidden";
+    
+})
+
+//Отмена редактирования
+$editBtn_cancel.addEventListener('click', function()
+{
+    $bg_editAts.style.opacity = "0";
+    $bg_editAts.style.visibility = "hidden";
+    $editAts.style.opacity = "0";
+    $editAts.style.visibility = "hidden";
+})
 
 
 let tempSelectedBanner = 0;
@@ -140,15 +245,6 @@ $list_of_ats.addEventListener('click', function(e)
             
         }
 })
-
-function isDSurnameCorrect() {
-    isCorrect = true;
-    if (($dSurname.value == ' ') || (!(/^[A-Za-z]+$/i).test($dSurname.value))) {
-        isCorrect = false;
-    }
-    return isCorrect;
-}
-
 
 // Присвоение номера
 $asBtn_save.addEventListener('click', function(e)
@@ -173,8 +269,11 @@ $asBtn_save.addEventListener('click', function(e)
     {
         console.log(data);
     })
-    
-    
+    $bg_assignment.style.opacity = "0";
+    $bg_assignment.style.visibility = "hidden";
+    $assignment.style.opacity = "0";
+    $assignment.style.visibility = "hidden";
+    GetInfo();
 })
 
 //Отмена присвоения
@@ -198,15 +297,31 @@ $addBtn.addEventListener('click', function()
 //Добавление АТС
 $addBtn_save.addEventListener('click', function()
 {
-    let addAts = {
-        number:$addNumber.value,
-        isFreeNumber:1,
-        name:$addName.value,
-        surname:$addSurname.value,
-        lastname:$addLastName.value,
-        addres:$addAddres.value,
-        mobilenumber:$addMobileNumber.value,
-        email:$addEmail.value
+    let addAts;
+    if (isFreeNumber == 1)
+    {
+        addAts = {
+            number:$addNumber.value,
+            isFreeNumber:0,
+            name:"null",
+            surname:"null",
+            lastname:"null",
+            addres:"null",
+            mobilenumber:"null",
+            email:"null"
+        }
+    }
+    else{
+        addAts = {
+            number:$addNumber.value,
+            isFreeNumber:1,
+            name:$addName.value,
+            surname:$addSurname.value,
+            lastname:$addLastName.value,
+            addres:$addAddres.value,
+            mobilenumber:$addMobileNumber.value,
+            email:$addEmail.value
+        }
     }
     console.log(addAts);
     fetch("http://localhost:8080/back?addAts", {
@@ -222,6 +337,8 @@ $addBtn_save.addEventListener('click', function()
     $bg_addAts.style.visibility = "hidden";
     $addAts.style.opacity = "0";
     $addAts.style.visibility = "hidden";
+    GetInfo();
+    clearAts();
 })
 
 //Открытие окна для удаления АТС
@@ -237,18 +354,18 @@ $delBtn_save.addEventListener('click', function(){
     fetch("http://localhost:8080/back?deleteAts", {
         method: 'POST',
         body: deleteByNumber,
-    }).then(response =>
-        response.json().then(data => ({
-            data: data,
-            status: response.status
-        })).then(res => {
-            if (JSON.stringify(res.data) == '{"Deletion":"Deleted"}') {
-                alert("Deleted!")
-            } else {
-                alert("Try again!")
-            }
-        }));
-    alert('Successful!');
+    }).then(function(response)
+    {
+        return response.json;
+    })
+        
+
+    $bg_delAts.style.opacity = "0";
+    $bg_delAts.style.visibility = "hidden";
+    $delAts.style.opacity = "0";
+    $delAts.style.visibility = "hidden";
+    $delNumber.value = "";
+    GetInfo();
 })
 
 // Отмена удаления
@@ -329,7 +446,51 @@ function checkFree()
             templateGenerator(data.atsList, isActive);
         });
     }
-
-
-    
 }
+
+let isFreeNumber = 0;
+function setFree()
+    {
+        if($setFreeNumber.checked)
+        {
+            isFreeNumber = 1;
+            $addName.style.visibility = "hidden";
+            $addSurname.style.visibility = "hidden";
+            $addLastName.style.visibility = "hidden";
+            $addAddres.style.visibility = "hidden";
+            $addMobileNumber.style.visibility = "hidden";
+            $addEmail.style.visibility = "hidden";
+        }
+        else
+        {
+            isFreeNumber = 0;
+            $addName.style.visibility = "visible";
+            $addSurname.style.visibility = "visible";
+            $addLastName.style.visibility = "visible";
+            $addAddres.style.visibility = "visible";
+            $addMobileNumber.style.visibility = "visible";
+            $addEmail.style.visibility = "visible";
+        }
+    }
+
+    function setFreeEdit()
+    {
+        if($isFreeNumberEdit.checked)
+        {
+            isFreeNumberEdit = 1;
+            $editName.style.visibility = "hidden";
+            $editSurname.style.visibility = "hidden";
+            $editLastName.style.visibility = "hidden";
+            $editAddres.style.visibility = "hidden";
+            $editMobileNumber.style.visibility = "hidden";
+        }
+        else
+        {
+            isFreeNumberEdit = 0;
+            $editName.style.visibility = "visible";
+            $editSurname.style.visibility = "visible";
+            $editLastName.style.visibility = "visible";
+            $editAddres.style.visibility = "visible";
+            $editMobileNumber.style.visibility = "visible";
+        }
+    }

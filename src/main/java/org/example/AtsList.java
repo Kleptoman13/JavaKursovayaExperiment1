@@ -25,6 +25,17 @@ public class AtsList implements Serializable {
         list.remove(selected_numberI);
     }
 
+    public void setTempAts(Ats tempAts)
+    {
+        for (int i = 0; i < list.size(); i++) {
+            if(list.get(i).getEmail().equals(tempAts.getEmail()))
+            {
+                list.set(i, tempAts);
+            }
+        }
+    }
+
+
     public void deleteByNumber(String number) {
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getNumber() == Integer.parseInt(number, 10)) {
@@ -33,9 +44,9 @@ public class AtsList implements Serializable {
         }
     }
 
-    public ArrayList getAtsList()
+    public ArrayList<Ats> getAtsList()
     {
-        return this.list;
+        return list;
     }
 
     @Override

@@ -14,7 +14,7 @@
                 <div class="functions">
                     <div class="liveSearchBlock">
                         <h4>Search</h4>
-                        <input type="text" class="byNumber" placeholder="Search by number">
+                        <input type="number" class="byNumber" placeholder="Search by number">
                         <form id="liveSearch">
                             <select name="liveSearch" id="liveSearch" class="liveSearchField">
                                 <option value="none" disabled selected>Category...</option>
@@ -56,6 +56,7 @@
         <div class="addAts">
             <div class="addAts_content">
                 <h2>Add ATS</h2>
+                <input type="checkbox" onclick="setFree()" class="isFreeNumber"><label>Free Number</label><br>
                 <input type="number" class="addNumber" placeholder="Number"><br>
                 <input type="text" class="addName" placeholder="Name"><br>
                 <input type="text" class="addSurname" placeholder="Surname"><br>
@@ -67,6 +68,25 @@
             <div class="assign_btns">
                 <input class="addBtn_save" type="button" value="Добавить">
                 <input class="addBtn_cancel" type="button" value="Отменить">
+            </div>
+        </div>
+    </div>
+
+    <div class="bg_editAts">
+        <div class="editAts">
+            <div class="editAts_content">
+                <h2>EDIT ATS</h2>
+                <input type="checkbox" onclick="setFreeEdit()" class="isFreeNumberEdit"><label>Free Number</label><br>
+                <input type="number" class="editNumber" placeholder="Number"><br>
+                <input type="text" class="editName" placeholder="Name"><br>
+                <input type="text" class="editSurname" placeholder="Surname"><br>
+                <input type="text" class="editLastname" placeholder="Last Name"><br>
+                <input type="text" class="editAddres" placeholder="Addres"><br>
+                <input type="number" class="editMobileNumber" placeholder="Mobile Number"><br>
+            </div>
+            <div class="assign_btns">
+                <input class="editBtn_save" type="button" value="Добавить">
+                <input class="editBtn_cancel" type="button" value="Отменить">
             </div>
         </div>
     </div>

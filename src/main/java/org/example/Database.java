@@ -15,8 +15,12 @@ public class Database {
         objectMapper.writeValue(new File("./src/main/Database/" + filename + ".json"), atsList);
     }
 
+
+
     public static AtsList loadJSON(String filename) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(new File(filename), AtsList.class);
     }
+
+
 }

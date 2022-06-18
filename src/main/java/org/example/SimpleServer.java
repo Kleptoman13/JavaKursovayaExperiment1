@@ -44,8 +44,23 @@ public class SimpleServer implements HttpHandler {
             AtsList tempAtsList = Database.loadJSON("./src/main/Database/AtsDataBase.json");
             tempAtsList.add(tempAts);
             System.out.println(tempAtsList);
+            System.out.println(tempAtsList.getAtsList().get(0).getNumber());
             Database.saveJSON(tempAtsList, "AtsDataBase");
             response.append(tempAts);
+        }
+
+        if (requestParamValues[0].equals("editAts"))
+        {
+            ObjectMapper objectMapper = new ObjectMapper();
+            Ats tempAts = objectMapper.readValue(new BufferedReader(new InputStreamReader(httpExchange.getRequestBody())).lines().collect(Collectors.joining("\n")), Ats.class);
+            AtsList tempAtsList = Database.loadJSON("./src/main/Database/AtsDataBase.json");
+
+            tempAtsList.setTempAts(tempAts);
+
+            System.out.println(tempAtsList);
+            Database.saveJSON(tempAtsList, "AtsDataBase");
+
+            response.append("{\"Editing\": \"Edited\"}");
         }
 
         if (requestParamValues[0].equals("deleteAts"))
@@ -54,12 +69,9 @@ public class SimpleServer implements HttpHandler {
             AtsList tempAtsList = Database.loadJSON("./src/main/Database/AtsDataBase.json");
             int tempSize = tempAtsList.getAtsList().size();
             System.out.println(tempSize);
-            System.out.println(tempAtsList.getAtsList().get(0));
-            if (tempSize > tempAtsList.getAtsList().size()) {
-                response.append("{\"Deletion\": \"Deleted\"}");
-            } else {
-                response.append("{\"Deletion\": \"notDeleted\"}");
-            }
+            tempAtsList.deleteByNumber(tempNumber);
+            Database.saveJSON(tempAtsList, "AtsDataBase");
+            response.append("{\"Delete\": \"Deleted\"}");
         }
 
         /*
@@ -73,6 +85,7 @@ public class SimpleServer implements HttpHandler {
 
             tempAtsList.AssignNumber(numbers.getSelected_number(), numbers.getSelected_banner(), numbers.getSelected_numberI());
 
+            Database.saveJSON(tempAtsList, "AtsDataBase");
             System.out.println(tempAtsList);
             response.append(numbers);
         }
